@@ -1,0 +1,21 @@
+{
+	"nodes":[
+		{"id":"db_schema","type":"text","text":"## 🗄️ СТРУКТУРА ДАННЫХ (Firestore)\n\n### 👤 users (Коллекция)\n- `uid`: ID документа\n- `email`: Почта\n- `displayName`: Имя\n- `role`: 'student' | 'admin'\n- `photoURL`: Аватар\n\n### 📝 posts (Коллекция)\n- `author_id`: ID автора\n- `text`: Текст поста\n- `created_at`: Время создания\n\n### 💬 chats (Группа коллекций)\n- `chat_id`: отсортированные UID (id1_id2)\n- **Под-коллекция**: `messages`\n  - `senderId`, `receiverId`, `text`, `read` (bool)\n\n### 🎭 clubs (Коллекция)\n- `name`, `description`, `icon`, `color`\n- `members`: массив UID участников\n- `created_by`: ID владельца","x":0,"y":600,"width":600,"height":600,"color":"5"},
+		{"id":"file_tree","type":"text","text":"## 📂 СТРУКТУРА ФАЙЛОВ\n```\n/root\n  /backend\n    /cmd/app/main.go (Точка входа)\n    /internal/handlers (Логика)\n    /internal/middleware (Защита)\n    /internal/repositories/db.go (БД)\n  /frontend\n    /pages (Страницы)\n    /components (Компоненты)\n    /stores (Состояния Pinia)\n    /plugins (Плагины Firebase)\n    /middleware (Защита роутов)\n  run.bat (Менеджер запуска)\n```","x":-1000,"y":960,"width":800,"height":400,"color":"6"},
+		{"id":"be_handlers","type":"text","text":"### 🎮 Обработчики (Handlers)\n- `user_handler.go`: Профиль, Статистика\n- `post_handler.go`: CRUD постов ленты\n- `club_handler.go`: Клубы, Вступление/Выход\n- `news_handler.go`: Публичные новости\n- `admin_handler.go`: Роли и Модерация","x":680,"y":650,"width":400,"height":500,"color":"2"},
+		{"id":"be_core","type":"text","text":"## ⚙️ БЭКЕНД (Golang)\n- **Фреймворк**: Gin Gonic\n- **Язык**: Go 1.21+\n- **Точка входа**: `cmd/app/main.go`\n- **База**: Google Cloud Firestore SDK\n- **Auth**: Firebase Admin SDK (Проверка токенов)","x":680,"y":-125,"width":400,"height":300,"color":"2"},
+		{"id":"title","type":"text","text":"# 🚀 СОЦСЕТЬ ITSTEP: КАРТА АРХИТЕКТУРЫ\n**Подробная техническая документация и структура проекта**","x":-160,"y":-400,"width":600,"height":150,"color":"1"},
+		{"id":"fe_pages","type":"text","text":"### 📄 Страницы и Роуты\n- `/` (`index.vue`): Лента и Новости\n- `/chat`: Чат между студентами\n- `/clubs`: Управление клубами\n- `/profile`: Профиль и Статистика\n- `/login` / `/register`: Вход и Регистрация\n- `/admin/**`: Панель администратора","x":-1040,"y":500,"width":400,"height":400,"color":"4"},
+		{"id":"be_mw","type":"text","text":"### 🛡️ Middleware (Защита)\n- `AuthMiddleware`: Проверка JWT токена\n- `AdminRequired`: Проверка прав админа\n- `CORS`: Настройка доступа (Cross-origin)","x":1160,"y":150,"width":400,"height":300,"color":"2"},
+		{"id":"fe_core","type":"text","text":"## 🎨 ФРОНТЕНД (Nuxt 3)\n- **Фреймворк**: Nuxt 3 (Vue 3 + Vite)\n- **Стейт-менеджер**: Pinia\n- **API Клиент**: `useApi.ts` (обертка над fetch)\n- **Авторизация**: `useAuth.ts` (Firebase Auth SDK)\n- **Real-time**: Firestore `onSnapshot`","x":-560,"y":350,"width":400,"height":300,"color":"4"},
+		{"id":"flow_chat","type":"text","text":"### 💬 ПОТОК СООБЩЕНИЙ\n1. Отправка в `chats/{id}/messages`\n2. Срабатывает глобальный слушатель\n3. В Pinia растет `unreadCount`\n4. У получателя горит 🔔 красный индикатор","x":-250,"y":-75,"width":500,"height":200,"color":"3"},
+		{"id":"fe_stores","type":"text","text":"### 📦 Pinia Сторы\n- `user.ts`: Данные юзера и роль\n- `notifications.ts`: Счетчик сообщений\n- `admin.ts`: Состояние модерации","x":-840,"y":-75,"width":400,"height":300,"color":"4"}
+	],
+	"edges":[
+		{"id":"e1","fromNode":"fe_core","fromSide":"right","toNode":"be_core","toSide":"left","color":"4","label":"Запросы к API"},
+		{"id":"e2","fromNode":"be_core","fromSide":"bottom","toNode":"db_schema","toSide":"top","color":"2","label":"Чтение/Запись"},
+		{"id":"e3","fromNode":"fe_core","fromSide":"bottom","toNode":"db_schema","toSide":"left","color":"4","label":"Прямые снимки (Snapshots)"},
+		{"id":"e4","fromNode":"fe_pages","fromSide":"left","toNode":"fe_stores","toSide":"right","label":"Доступ к состоянию"},
+		{"id":"e5","fromNode":"be_handlers","fromSide":"right","toNode":"be_mw","toSide":"left","label":"Защищено через"}
+	]
+}

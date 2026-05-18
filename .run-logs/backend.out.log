@@ -1,0 +1,45 @@
+[GIN-debug] [WARNING] Creating an Engine instance with the Logger and Recovery middleware already attached.
+
+[GIN-debug] [WARNING] Running in "debug" mode. Switch to "release" mode in production.
+ - using env:	export GIN_MODE=release
+ - using code:	gin.SetMode(gin.ReleaseMode)
+
+[GIN-debug] GET    /health                   --> main.main.func1 (4 handlers)
+[GIN-debug] GET    /api/v1/profile           --> github.com/user/itstep-backend/internal/handlers.GetUserProfile (5 handlers)
+[GIN-debug] PUT    /api/v1/profile           --> github.com/user/itstep-backend/internal/handlers.UpdateUserProfile (5 handlers)
+[GIN-debug] POST   /api/v1/posts             --> github.com/user/itstep-backend/internal/handlers.CreatePost (5 handlers)
+[GIN-debug] GET    /api/v1/posts             --> github.com/user/itstep-backend/internal/handlers.GetPosts (5 handlers)
+[GIN-debug] POST   /api/v1/posts/:id/like    --> github.com/user/itstep-backend/internal/handlers.LikePost (5 handlers)
+[GIN-debug] POST   /api/v1/posts/:id/comments --> github.com/user/itstep-backend/internal/handlers.AddComment (5 handlers)
+[GIN-debug] GET    /api/v1/posts/:id/comments --> github.com/user/itstep-backend/internal/handlers.GetComments (5 handlers)
+[GIN-debug] GET    /api/v1/news              --> github.com/user/itstep-backend/internal/handlers.GetNews (5 handlers)
+[GIN-debug] GET    /api/v1/profile/stats     --> github.com/user/itstep-backend/internal/handlers.GetUserStats (5 handlers)
+[GIN-debug] GET    /api/v1/users             --> github.com/user/itstep-backend/internal/handlers.GetAllUsers (5 handlers)
+[GIN-debug] GET    /api/v1/clubs             --> github.com/user/itstep-backend/internal/handlers.GetClubs (5 handlers)
+[GIN-debug] POST   /api/v1/clubs             --> github.com/user/itstep-backend/internal/handlers.CreateClub (5 handlers)
+[GIN-debug] PUT    /api/v1/clubs/:id         --> github.com/user/itstep-backend/internal/handlers.UpdateClub (5 handlers)
+[GIN-debug] DELETE /api/v1/clubs/:id         --> github.com/user/itstep-backend/internal/handlers.DeleteClub (5 handlers)
+[GIN-debug] POST   /api/v1/clubs/:id/join    --> github.com/user/itstep-backend/internal/handlers.JoinClub (5 handlers)
+[GIN-debug] POST   /api/v1/clubs/:id/leave   --> github.com/user/itstep-backend/internal/handlers.LeaveClub (5 handlers)
+[GIN-debug] GET    /api/v1/admin/users       --> github.com/user/itstep-backend/internal/handlers.AdminGetUsers (6 handlers)
+[GIN-debug] PUT    /api/v1/admin/users/:id/role --> github.com/user/itstep-backend/internal/handlers.AdminUpdateUserRole (6 handlers)
+[GIN-debug] GET    /api/v1/admin/posts       --> github.com/user/itstep-backend/internal/handlers.AdminGetPosts (6 handlers)
+[GIN-debug] DELETE /api/v1/admin/posts/:id   --> github.com/user/itstep-backend/internal/handlers.AdminDeletePost (6 handlers)
+[GIN-debug] DELETE /api/v1/admin/news/:id    --> github.com/user/itstep-backend/internal/handlers.AdminDeleteNews (6 handlers)
+[GIN-debug] PUT    /api/v1/admin/news/:id    --> github.com/user/itstep-backend/internal/handlers.AdminUpdateNews (6 handlers)
+[GIN-debug] DELETE /api/v1/admin/clubs/:id   --> github.com/user/itstep-backend/internal/handlers.AdminDeleteClub (6 handlers)
+[GIN-debug] PUT    /api/v1/admin/clubs/:id   --> github.com/user/itstep-backend/internal/handlers.AdminUpdateClub (6 handlers)
+[GIN-debug] [WARNING] You trusted all proxies, this is NOT safe. We recommend you to set a value.
+Please check https://github.com/gin-gonic/gin/blob/master/docs/doc.md#dont-trust-all-proxies for details.
+[GIN-debug] Listening and serving HTTP on :8080
+[GIN] 2026/05/03 - 14:46:03 | 200 |       0s |             ::1 | GET      "/health"
+[GIN] 2026/05/03 - 14:46:21 | 200 | 555.57ms |             ::1 | PUT      "/api/v1/profile"
+[GIN] 2026/05/03 - 14:59:32 | 200 |       0s |             ::1 | GET      "/health"
+[GIN] 2026/05/03 - 15:00:13 | 404 | 505.91ms |             ::1 | GET      "/api/v1/profile"
+[GIN] 2026/05/03 - 15:00:14 | 200 | 174.68ms |             ::1 | PUT      "/api/v1/profile"
+[GIN] 2026/05/03 - 15:00:15 | 200 | 139.75ms |             ::1 | GET      "/api/v1/profile"
+[GIN] 2026/05/03 - 15:00:22 | 200 | 140.04ms |             ::1 | GET      "/api/v1/profile"
+[GIN] 2026/05/03 - 15:00:22 | 200 |  143.2ms |             ::1 | GET      "/api/v1/news"
+[GIN] 2026/05/03 - 15:00:22 | 200 |  149.6ms |             ::1 | GET      "/api/v1/posts"
+[GIN] 2026/05/03 - 15:00:24 | 200 | 160.57ms |             ::1 | GET      "/api/v1/users"
+[GIN] 2026/05/03 - 15:01:15 | 200 | 160.25ms |             ::1 | GET      "/api/v1/profile"
