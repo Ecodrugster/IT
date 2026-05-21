@@ -24,6 +24,7 @@ func CreatePost(c *gin.Context) {
 	post.AuthorID = authorID
 	post.CreatedAt = time.Now()
 	post.Likes = 0
+	post.CommentsCount = 0
 
 	// Save to Firestore
 	_, _, err := repositories.FirestoreClient.Collection("posts").Add(c.Request.Context(), post)
@@ -119,6 +120,10 @@ func AddComment(c *gin.Context) {
 		c.JSON(http.StatusInternalServerError, gin.H{"error": "Failed to add comment"})
 		return
 	}
+
+	_, _ = repositories.FirestoreClient.Collection("posts").Doc(postID).Update(c.Request.Context(), []firestore.Update{
+		{Path: "comments_count", Value: firestore.Increment(1)},
+	})
 
 	role, roleErr := getUserRoleByUID(c, authorID)
 	if roleErr != nil {
