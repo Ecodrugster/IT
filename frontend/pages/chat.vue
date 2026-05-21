@@ -153,7 +153,6 @@
               >
                 Фото
               </button>
-              
               <input
                 v-model="newMessage"
                 type="text"

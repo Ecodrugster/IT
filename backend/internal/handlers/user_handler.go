@@ -49,15 +49,12 @@ func UpdateUserProfile(c *gin.Context) {
 		existingData = existingDoc.Data()
 	}
 
-	// Users can update only own public profile fields.
-	// Role/group and other privileged fields are controlled by admin only.
 	update := map[string]interface{}{
 		"updated_at": now,
 		"role":       normalizeRole(asString(existingData["role"])),
 	}
 
 	if update["role"] == "student" {
-		// role already defaults to student, keep explicit for new docs as well.
 		update["role"] = "student"
 	}
 
