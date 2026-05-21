@@ -4,7 +4,7 @@
     <div class="mb-8 flex flex-col justify-between gap-4 sm:flex-row sm:items-center">
       <div>
         <h1 class="text-3xl font-bold bg-gradient-to-r from-white to-slate-400 bg-clip-text text-transparent flex items-center gap-2">
-          <span>🛍️</span> Магазин ITSTEP
+          Магазин ITSTEP
         </h1>
         <p class="text-xs text-slate-500 mt-1">
           Обменивайте заработанные за посещаемость монеты и звезды на фирменный мерч и технику!
@@ -63,7 +63,7 @@
         <div class="flex items-center gap-6">
           <!-- Coins Box -->
           <div class="flex items-center gap-3 bg-slate-900/60 border border-white/5 px-6 py-3 rounded-2xl shadow-inner">
-            <span class="text-3xl filter drop-shadow">🪙</span>
+            <span class="text-3xl filter drop-shadow">💰</span>
             <div>
               <div class="text-[10px] text-slate-500 uppercase tracking-wider">Монеты</div>
               <div class="text-xl font-bold text-yellow-400">{{ userStore.profile?.coins || 0 }}</div>
@@ -162,7 +162,7 @@
               <span class="text-xs text-slate-500">Стоимость:</span>
               <div class="flex items-center gap-3">
                 <div class="flex items-center gap-1">
-                  <span>🪙</span>
+                  <span>💰</span>
                   <span class="font-bold text-sm" :class="canAffordCoins(item) ? 'text-yellow-400' : 'text-red-500/80'">
                     {{ item.coins_price }}
                   </span>
@@ -455,7 +455,7 @@
                 <div>
                   <h5 class="text-white font-bold text-xs">{{ cartItem.item.name }}</h5>
                   <div class="flex items-center gap-2 text-[10px] text-slate-500 mt-1">
-                    <span>🪙 {{ cartItem.item.coins_price }}</span>
+                    <span>💰 {{ cartItem.item.coins_price }}</span>
                     <span v-if="cartItem.item.stars_price > 0">🌟 {{ cartItem.item.stars_price }}</span>
                   </div>
                 </div>
@@ -488,7 +488,7 @@
             <div class="flex justify-between items-center text-xs text-slate-400">
               <span>Итого стоимость:</span>
               <div class="flex items-center gap-2 text-white font-bold">
-                <span class="text-yellow-400">{{ cartTotalCoins }} 🪙</span>
+                <span class="text-yellow-400">{{ cartTotalCoins }} 💰</span>
                 <span v-if="cartTotalStars > 0" class="text-amber-500">{{ cartTotalStars }} 🌟</span>
               </div>
             </div>
@@ -497,7 +497,7 @@
             <div class="flex justify-between items-center text-xs text-slate-500">
               <span>Ваш баланс:</span>
               <div class="flex items-center gap-2 font-semibold">
-                <span class="text-yellow-500/80">{{ userStore.profile?.coins || 0 }} 🪙</span>
+                <span class="text-yellow-500/80">{{ userStore.profile?.coins || 0 }} 💰</span>
                 <span class="text-amber-500/80">{{ userStore.profile?.stars || 0 }} 🌟</span>
               </div>
             </div>
@@ -513,7 +513,7 @@
             </div>
             <p class="text-[10px] text-slate-400 leading-relaxed">
               Для оформления заказа вам не хватает:
-              <strong v-if="missingCoins > 0" class="text-yellow-400 ml-1">{{ missingCoins }} 🪙</strong>
+              <strong v-if="missingCoins > 0" class="text-yellow-400 ml-1">{{ missingCoins }} 💰</strong>
               <strong v-if="missingStars > 0" class="text-amber-500 ml-1">{{ missingStars }} 🌟</strong>.
             </p>
             <div class="h-1.5 w-full bg-slate-900 rounded-full overflow-hidden mt-1">
@@ -715,7 +715,7 @@
 </template>
 
 <script setup>
-import { ref, onMounted, computed } from 'vue'
+import { ref, onMounted, computed, watch } from 'vue'
 import { useUserStore } from '~/stores/user'
 
 definePageMeta({
@@ -786,7 +786,7 @@ const loadStoreItems = async () => {
   loading.value = true
   try {
     const data = await api('/store/items')
-    items.value = data
+    items.value = data || []
   } catch (e) {
     console.error('Failed to load store items:', e)
   } finally {
@@ -799,7 +799,7 @@ const loadPurchaseHistory = async () => {
   historyLoading.value = true
   try {
     const data = await api('/store/history')
-    purchases.value = data
+    purchases.value = data || []
   } catch (e) {
     console.error('Failed to load purchase history:', e)
   } finally {
@@ -812,7 +812,7 @@ const loadAdminPurchases = async () => {
   adminLoading.value = true
   try {
     const data = await api('/admin/store/purchases')
-    adminPurchases.value = data
+    adminPurchases.value = data || []
   } catch (e) {
     console.error('Failed to load admin purchases:', e)
   } finally {
@@ -993,6 +993,19 @@ const executeCartCheckout = async () => {
 }
 
 onMounted(() => {
+  const savedCart = localStorage.getItem('itstep_store_cart')
+  if (savedCart) {
+    try {
+      cart.value = JSON.parse(savedCart)
+    } catch (e) {
+      console.error('Failed to parse cart', e)
+    }
+  }
+
+  watch(cart, (newCart) => {
+    localStorage.setItem('itstep_store_cart', JSON.stringify(newCart))
+  }, { deep: true })
+
   loadStoreItems()
   if (userStore.role === 'student') {
     loadPurchaseHistory()

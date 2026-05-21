@@ -153,14 +153,7 @@
               >
                 Фото
               </button>
-              <button
-                type="button"
-                class="rounded-lg border border-white/10 px-3 py-3 text-xs font-medium text-slate-300 transition-colors hover:bg-white/10 hover:text-white"
-                @click="openCamera"
-              >
-                Камера
-              </button>
-
+              
               <input
                 v-model="newMessage"
                 type="text"

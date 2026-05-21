@@ -117,7 +117,7 @@ onMounted(async () => {
           <!-- Баланс студента (Монеты и Звезды) -->
           <NuxtLink v-if="userStore.user && userStore.role === 'student'" to="/store" class="hidden md:flex items-center space-x-3 bg-slate-900 border border-white/5 px-3 py-1.5 rounded-full text-xs text-slate-300 hover:border-yellow-500/30 transition-all hover:bg-slate-900/80 shadow-inner shadow-black/40" title="Магазин колледжа: проверить баланс">
             <div class="flex items-center space-x-1 hover:scale-105 transition-transform">
-              <span>🪙</span>
+              <span>💰</span>
               <span class="font-bold text-yellow-400">{{ userStore.profile?.coins || 0 }}</span>
             </div>
             <div class="w-px h-3 bg-white/10"></div>
