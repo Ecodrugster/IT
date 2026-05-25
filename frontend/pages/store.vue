@@ -738,23 +738,22 @@ const showSuccessModal = ref(false)
 const selectedItem = ref(null)
 const successData = ref(null)
 
-// Admin variables
+//Админка
 const adminPurchases = ref([])
 const adminLoading = ref(false)
 const adminSearch = ref('')
 const showClaimModal = ref(false)
 const selectedPurchase = ref(null)
 
-// Cart state variables
+//Корзина
 const cart = ref([])
 const showCartModal = ref(false)
 
-// Utility: check if string is a realistic image file path
+//Утилиты
 const isImageFile = (val) => {
   return typeof val === 'string' && (val.includes('.') || val.startsWith('/'))
 }
 
-// Affordability helpers
 const canAffordCoins = (item) => {
   return (userStore.profile?.coins || 0) >= item.coins_price
 }
@@ -843,12 +842,12 @@ const executePurchase = async () => {
       body: { item_id: selectedItem.value.id }
     })
     
-    // Close confirmation and open success
+    
     showConfirmModal.value = false
     successData.value = data
     showSuccessModal.value = true
 
-    // Sync student balance and reload lists
+    // Cинхрон со студентом
     await refreshProfile()
     await loadStoreItems()
     await loadPurchaseHistory()
@@ -876,7 +875,7 @@ const executeClaim = async () => {
     showClaimModal.value = false
     alert('Товар успешно выдан студенту! Студент получил системное уведомление.')
     
-    // Reload admin purchases list
+    // Загрузка админа
     await loadAdminPurchases()
   } catch (e) {
     alert(e.message || 'Ошибка выдачи товара')
@@ -902,7 +901,7 @@ const formatDate = (dateStr) => {
   })
 }
 
-// Shopping Cart Actions
+//Добавить в корзину
 const addToCart = (item) => {
   const existing = cart.value.find(c => c.item.id === item.id)
   if (existing) {

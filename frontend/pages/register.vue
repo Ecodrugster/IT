@@ -97,8 +97,7 @@ const handleRegister = async () => {
   try {
     await register(email.value, password.value)
     success.value = true
-    // Optionally redirect after a delay
-    // setTimeout(() => router.push('/'), 5000)
+
   } catch (e) {
     let msg = e.message
     if (e.code === 'auth/email-already-in-use') {
