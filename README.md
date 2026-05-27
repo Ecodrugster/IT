@@ -85,3 +85,6 @@
 ## 📝 Планы и развитие (Roadmap)
 Начальное развитие проекта, планирование архитектуры и новые фичи описаны в файлах. По этим Майндкартам пошагово реализовывали проект начиная с 1 мая 2026 года.`Future_Roadmap.canvas` и `ITSTEP_Project_Map.canvas` (открываются через [Obsidian](https://obsidian.md/)).
 
+FIGMA:
+https://www.figma.com/board/ngd32NaMB333zekpASws5y/FigJam-basics?node-id=0-1&t=awFDYOwX6yXbiAnE-0
+
