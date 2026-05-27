@@ -292,28 +292,32 @@ func UpdateStudentGamification(ctx context.Context, studentID, oldStatus, newSta
 
 	studentRef := repositories.FirestoreClient.Collection("users").Doc(studentID)
 	studentDoc, err := studentRef.Get(ctx)
-	if err != nil && !studentDoc.Exists() {
+	if err != nil {
 		return
 	}
 
 	data := studentDoc.Data()
-	var coins, stars, streak int
 
-	if cVal, ok := data["coins"].(int64); ok {
-		coins = int(cVal)
-	} else if cValFloat, ok := data["coins"].(float64); ok {
-		coins = int(cValFloat)
+	extractInt := func(val interface{}) int {
+		switch v := val.(type) {
+		case int64:
+			return int(v)
+		case float64:
+			return int(v)
+		case int:
+			return v
+		case int32:
+			return int(v)
+		case float32:
+			return int(v)
+		default:
+			return 0
+		}
 	}
-	if sVal, ok := data["stars"].(int64); ok {
-		stars = int(sVal)
-	} else if sValFloat, ok := data["stars"].(float64); ok {
-		stars = int(sValFloat)
-	}
-	if stVal, ok := data["streak"].(int64); ok {
-		streak = int(stVal)
-	} else if stValFloat, ok := data["streak"].(float64); ok {
-		streak = int(stValFloat)
-	}
+
+	coins := extractInt(data["coins"])
+	stars := extractInt(data["stars"])
+	streak := extractInt(data["streak"])
 
 	isActive := func(status string) bool {
 		return status == "present" || status == "late"

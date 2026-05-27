@@ -3,6 +3,7 @@ package handlers
 import (
 	"fmt"
 	"net/http"
+	"sort"
 	"strings"
 	"time"
 
@@ -199,7 +200,7 @@ func GetUserGrades(c *gin.Context) {
 		}
 	}
 
-	iter := repositories.FirestoreClient.Collection("grades").Where("student_id", "==", studentID).OrderBy("created_at", repositories.Descending).Documents(c.Request.Context())
+	iter := repositories.FirestoreClient.Collection("grades").Where("student_id", "==", studentID).Documents(c.Request.Context())
 
 	var grades []map[string]interface{}
 	for {
@@ -216,6 +217,15 @@ func GetUserGrades(c *gin.Context) {
 		data["id"] = doc.Ref.ID
 		grades = append(grades, data)
 	}
+
+	sort.Slice(grades, func(i, j int) bool {
+		tI, okI := grades[i]["created_at"].(time.Time)
+		tJ, okJ := grades[j]["created_at"].(time.Time)
+		if !okI || !okJ {
+			return false
+		}
+		return tI.After(tJ)
+	})
 
 	c.JSON(http.StatusOK, grades)
 }
